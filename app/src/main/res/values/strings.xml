@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ContactEntryApp</string>
+    <string name="first_name">First Name</string>
+    <string name="info">Info</string>
+    <string name="create_new_contact">Create New Contact</string>
+    <string name="search">Search</string>
+</resources>

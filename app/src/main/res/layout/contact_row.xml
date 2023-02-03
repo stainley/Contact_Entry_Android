@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/contactRowCardView"
+        style="@style/Widget.Material3.CardView.Elevated"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:clickable="true"
+        android:contentDescription="@string/info"
+        android:elevation="12dp"
+        android:focusable="true"
+        android:padding="8dp"
+        app:cardBackgroundColor="#E7E0EC"
+        app:cardCornerRadius="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/photoContact"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:contentDescription="@string/first_name"
+                android:minWidth="64dp"
+                android:minHeight="64dp"
+                android:padding="8dp"
+                android:src="@drawable/avatar_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/firstName_Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/first_name"
+                android:textSize="24sp"
+                app:chainUseRtl="true"
+                app:layout_constraintStart_toEndOf="@id/photoContact"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lastName_Lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:textSize="24sp"
+                app:chainUseRtl="true"
+                app:layout_constraintHorizontal_bias="0.216"
+                app:layout_constraintStart_toEndOf="@+id/firstName_Label"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Last Name" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phoneNumber_Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:textSize="16sp"
+                app:chainUseRtl="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.117"
+                app:layout_constraintStart_toEndOf="@+id/photoContact"
+                app:layout_constraintTop_toBottomOf="@id/firstName_Label"
+                app:layout_constraintVertical_bias="0.529"
+                tools:text="Phone Number" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
