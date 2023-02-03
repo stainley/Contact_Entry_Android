@@ -37,5 +37,7 @@ public class ContactViewModel extends ViewModel {
         repository.delete(contact);
     }
 
-    public void
+    public void updateContact(Contact contact) {
+        repository.update(contact);
+    }
 }

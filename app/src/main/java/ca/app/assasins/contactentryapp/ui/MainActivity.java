@@ -34,10 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
         binding.saveBtn.setOnClickListener(this::saveContact);
         binding.deleteBtn.setOnClickListener(this::deleteContact);
+        binding.updateBtn.setOnClickListener(this::updateContact);
 
         Intent intent = getIntent();
 
         contact = (Contact) intent.getSerializableExtra("contact");
+
+        binding.saveBtn.setEnabled(intent.getBooleanExtra("saveBtn", true));
+
 
         binding.firstNameTxt.setText(contact.getFirstName());
         binding.lastNameTxt.setText(contact.getLastName());
@@ -54,6 +58,29 @@ public class MainActivity extends AppCompatActivity {
         resultContact.putExtra("email", Objects.requireNonNull(binding.emailTxt.getText()).toString());
         setResult(Activity.RESULT_OK, resultContact);
 
+        finish();
+    }
+
+    private void updateContact(View view) {
+        ContactViewModel contactViewModel = new ViewModelProvider(this, new ContactViewModelFactory(getApplicationContext())).get(ContactViewModel.class);
+
+        if (!binding.firstNameTxt.getText().toString().equals("")) {
+            contact.setFirstName(binding.firstNameTxt.getText().toString());
+        }
+
+        if (!binding.lastNameTxt.getText().toString().equals("")) {
+            contact.setLastName(binding.lastNameTxt.getText().toString());
+        }
+
+        if (!binding.phoneNumberTxt.getText().toString().equals("")) {
+            contact.setPhoneNumber(binding.phoneNumberTxt.getText().toString());
+        }
+
+        if (!binding.emailTxt.getText().toString().equals("")) {
+            contact.setEmail(binding.emailTxt.getText().toString());
+        }
+
+        contactViewModel.updateContact(contact);
         finish();
     }
 

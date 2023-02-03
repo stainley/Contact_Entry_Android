@@ -19,7 +19,6 @@ public class ContactRepository {
         contactDao = contactRoom.contactDao();
     }
 
-
     public LiveData<List<Contact>> fetchContacts() {
         return contactDao.fetchAll();
     }

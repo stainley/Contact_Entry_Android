@@ -46,6 +46,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         holder.contactRowCardView.setOnClickListener(contactView -> {
             Intent contactDetailIntent = new Intent(context, MainActivity.class);
             contactDetailIntent.putExtra("contact", contacts.get(position));
+            contactDetailIntent.putExtra("saveBtn", false);
             context.startActivity(contactDetailIntent);
 
         });
