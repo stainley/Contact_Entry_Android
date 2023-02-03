@@ -42,11 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
         binding.saveBtn.setEnabled(intent.getBooleanExtra("saveBtn", true));
 
-
-        binding.firstNameTxt.setText(contact.getFirstName());
-        binding.lastNameTxt.setText(contact.getLastName());
-        binding.phoneNumberTxt.setText(contact.getPhoneNumber());
-        binding.emailTxt.setText(contact.getEmail());
+        if (contact != null) {
+            binding.firstNameTxt.setText(contact.getFirstName());
+            binding.lastNameTxt.setText(contact.getLastName());
+            binding.phoneNumberTxt.setText(contact.getPhoneNumber());
+            binding.emailTxt.setText(contact.getEmail());
+        }
     }
 
     private void saveContact(View view) {
@@ -64,19 +65,19 @@ public class MainActivity extends AppCompatActivity {
     private void updateContact(View view) {
         ContactViewModel contactViewModel = new ViewModelProvider(this, new ContactViewModelFactory(getApplicationContext())).get(ContactViewModel.class);
 
-        if (!binding.firstNameTxt.getText().toString().equals("")) {
+        if (!Objects.requireNonNull(binding.firstNameTxt.getText()).toString().equals("")) {
             contact.setFirstName(binding.firstNameTxt.getText().toString());
         }
 
-        if (!binding.lastNameTxt.getText().toString().equals("")) {
+        if (!Objects.requireNonNull(binding.lastNameTxt.getText()).toString().equals("")) {
             contact.setLastName(binding.lastNameTxt.getText().toString());
         }
 
-        if (!binding.phoneNumberTxt.getText().toString().equals("")) {
+        if (!Objects.requireNonNull(binding.phoneNumberTxt.getText()).toString().equals("")) {
             contact.setPhoneNumber(binding.phoneNumberTxt.getText().toString());
         }
 
-        if (!binding.emailTxt.getText().toString().equals("")) {
+        if (!Objects.requireNonNull(binding.emailTxt.getText()).toString().equals("")) {
             contact.setEmail(binding.emailTxt.getText().toString());
         }
 
@@ -90,5 +91,4 @@ public class MainActivity extends AppCompatActivity {
         contactViewModel.deleteContact(contact);
         finish();
     }
-
 }

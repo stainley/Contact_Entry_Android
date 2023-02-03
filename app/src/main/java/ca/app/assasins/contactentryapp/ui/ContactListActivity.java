@@ -11,9 +11,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,17 +25,16 @@ import ca.app.assasins.contactentryapp.viewmodel.ContactViewModel;
 import ca.app.assasins.contactentryapp.viewmodel.ContactViewModelFactory;
 
 
-public class ContactListActivity extends AppCompatActivity {
+public class ContactListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private static final String TAG = ContactListActivity.class.getName();
 
     ActivityListContactBinding binding;
 
     private List<Contact> contacts = new ArrayList<>();
-    private Contact contact;
     private ContactAdapter contactAdapter;
 
-    private ContactViewModel  contactViewModel;
+    private ContactViewModel contactViewModel;
 
     private final ActivityResultLauncher<Intent> launcher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -79,6 +77,8 @@ public class ContactListActivity extends AppCompatActivity {
         RecyclerView recyclerView = binding.contactList;
         contactViewModel = new ViewModelProvider(this, new ContactViewModelFactory(getApplicationContext())).get(ContactViewModel.class);
 
+        binding.search.setOnQueryTextListener(this);
+
         contactViewModel.getContactLiveData().observe(this, contactResult -> {
             if (contactResult != null) {
                 contacts = contactResult;
@@ -102,4 +102,14 @@ public class ContactListActivity extends AppCompatActivity {
         launcher.launch(newContactIntent);
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        contactAdapter.filter(newText);
+        return false;
+    }
 }

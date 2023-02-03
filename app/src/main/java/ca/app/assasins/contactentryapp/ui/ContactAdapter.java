@@ -11,41 +11,44 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ca.app.assasins.contactentryapp.R;
-import ca.app.assasins.contactentryapp.databinding.ContactRowBinding;
 import ca.app.assasins.contactentryapp.model.Contact;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
     private Context context;
     private final List<Contact> contacts;
+    private List<Contact> filteredContacts = new ArrayList<>();
 
     public ContactAdapter(List<Contact> contacts) {
         this.contacts = contacts;
+        if (contacts != null) {
+            filteredContacts.addAll(contacts);
+        }
     }
-
 
     @NonNull
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //ContactRowBinding binding = ContactRowBinding.inflate(LayoutInflater.from(parent.getContext()));
         this.context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.contact_row, parent, false);
-        //View view = binding.getRoot();
+
         return new ContactViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
-        holder.firstNameLabel.setText(contacts.get(position).getFirstName());
-        holder.lastNameLabel.setText(contacts.get(position).getLastName());
-        holder.phoneNumberLabel.setText(contacts.get(position).getPhoneNumber());
+        holder.firstNameLabel.setText(filteredContacts.get(position).getFirstName());
+        holder.lastNameLabel.setText(filteredContacts.get(position).getLastName());
+        holder.phoneNumberLabel.setText(filteredContacts.get(position).getPhoneNumber());
 
         holder.contactRowCardView.setOnClickListener(contactView -> {
             Intent contactDetailIntent = new Intent(context, MainActivity.class);
-            contactDetailIntent.putExtra("contact", contacts.get(position));
+            contactDetailIntent.putExtra("contact", filteredContacts.get(position));
             contactDetailIntent.putExtra("saveBtn", false);
             context.startActivity(contactDetailIntent);
 
@@ -54,7 +57,23 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     @Override
     public int getItemCount() {
-        return contacts.size();
+        return filteredContacts.size();
+    }
+
+    public void filter(String newText) {
+        newText = newText.toLowerCase();
+
+        if (newText.length() == 0) {
+            filteredContacts.addAll(contacts);
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(newText);
+            filteredContacts = contacts.stream().filter(contact -> contact.getFirstName().toLowerCase().contains(sb))
+                    .collect(Collectors.toList());
+
+        }
+        notifyDataSetChanged();
+
     }
 
     static class ContactViewHolder extends RecyclerView.ViewHolder {
