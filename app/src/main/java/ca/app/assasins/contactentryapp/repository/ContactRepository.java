@@ -24,14 +24,14 @@ public class ContactRepository {
     }
 
     public void save(Contact contact) {
-        contactDao.save(contact);
+        ContactRoom.databaseWriterExecutor.execute(() -> contactDao.save(contact));
     }
 
     public void delete(Contact contact) {
-        this.contactDao.delete(contact);
+        ContactRoom.databaseWriterExecutor.execute(() -> this.contactDao.delete(contact));
     }
 
     public void update(Contact contact) {
-        this.contactDao.update(contact);
+        ContactRoom.databaseWriterExecutor.execute(() -> this.contactDao.update(contact));
     }
 }

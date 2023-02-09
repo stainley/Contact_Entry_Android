@@ -47,7 +47,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         holder.phoneNumberLabel.setText(filteredContacts.get(position).getPhoneNumber());
 
         holder.contactRowCardView.setOnClickListener(contactView -> {
-            Intent contactDetailIntent = new Intent(context, MainActivity.class);
+            Intent contactDetailIntent = new Intent(context, ContactEntryActivity.class);
             contactDetailIntent.putExtra("contact", filteredContacts.get(position));
             contactDetailIntent.putExtra("saveBtn", false);
             context.startActivity(contactDetailIntent);
@@ -60,21 +60,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         return filteredContacts.size();
     }
 
-    public void filter(String newText) {
-        newText = newText.toLowerCase();
-
-        if (newText.length() == 0) {
-            filteredContacts.addAll(contacts);
-        } else {
-            StringBuilder sb = new StringBuilder();
-            sb.append(newText);
-            filteredContacts = contacts.stream().filter(contact -> contact.getFirstName().toLowerCase().contains(sb))
-                    .collect(Collectors.toList());
-
-        }
-        notifyDataSetChanged();
-
-    }
 
     static class ContactViewHolder extends RecyclerView.ViewHolder {
 
@@ -92,5 +77,23 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             phoneNumberLabel = itemView.findViewById(R.id.phoneNumber_Label);
             contactRowCardView = itemView.findViewById(R.id.contactRowCardView);
         }
+    }
+
+    // Tell the IDE don't show this warning message
+    @SuppressWarnings("notifyDataSetChanged")
+    public void filter(String newText) {
+        newText = newText.toLowerCase();
+
+        if (newText.length() == 0) {
+            filteredContacts.clear();
+            filteredContacts.addAll(contacts);
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(newText);
+            filteredContacts = contacts.stream().filter(contact -> contact.getFirstName().toLowerCase().contains(sb))
+                    .collect(Collectors.toList());
+
+        }
+        notifyDataSetChanged();
     }
 }

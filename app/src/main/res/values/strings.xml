@@ -4,4 +4,7 @@
     <string name="info">Info</string>
     <string name="create_new_contact">Create New Contact</string>
     <string name="search">Search</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 </resources>

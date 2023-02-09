@@ -98,7 +98,9 @@ public class ContactListActivity extends AppCompatActivity implements SearchView
 
     private void createNewContact(View view) {
 
-        Intent newContactIntent = new Intent(this, MainActivity.class);
+        Intent newContactIntent = new Intent(this, ContactEntryActivity.class);
+        newContactIntent.putExtra("updateBtn", false);
+        newContactIntent.putExtra("deleteBtn", false);
         launcher.launch(newContactIntent);
     }
 

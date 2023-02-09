@@ -11,22 +11,23 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.Objects;
 
-import ca.app.assasins.contactentryapp.databinding.ActivityMainBinding;
+import ca.app.assasins.contactentryapp.databinding.ActivityContactEntryBinding;
 import ca.app.assasins.contactentryapp.model.Contact;
 import ca.app.assasins.contactentryapp.viewmodel.ContactViewModel;
 import ca.app.assasins.contactentryapp.viewmodel.ContactViewModelFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class ContactEntryActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    private ActivityContactEntryBinding binding;
 
     private Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(LayoutInflater.from(this));
+        binding = ActivityContactEntryBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         contact = (Contact) intent.getSerializableExtra("contact");
 
-        binding.saveBtn.setEnabled(intent.getBooleanExtra("saveBtn", true));
+        binding.saveBtn.setVisibility(!intent.getBooleanExtra("saveBtn", true) ? View.INVISIBLE : View.VISIBLE);
+
+        binding.deleteBtn.setVisibility(!intent.getBooleanExtra("deleteBtn", true) ? View.INVISIBLE : View.VISIBLE);
+        binding.updateBtn.setVisibility(!intent.getBooleanExtra("updateBtn", true) ? View.INVISIBLE : View.VISIBLE);
 
         if (contact != null) {
             binding.firstNameTxt.setText(contact.getFirstName());

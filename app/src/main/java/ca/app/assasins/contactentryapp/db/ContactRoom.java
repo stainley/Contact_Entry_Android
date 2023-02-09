@@ -24,7 +24,7 @@ public abstract class ContactRoom extends RoomDatabase {
     public static ContactRoom getDatabase(Context context) {
         if (INSTANCE == null) {
             synchronized (ContactRoom.class) {
-                INSTANCE = Room.databaseBuilder(context, ContactRoom.class, "contact_db").allowMainThreadQueries().build();
+                INSTANCE = Room.databaseBuilder(context, ContactRoom.class, "contact_db").build();
             }
         }
         return INSTANCE;
